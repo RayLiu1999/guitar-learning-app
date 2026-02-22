@@ -1,0 +1,8 @@
+# 根目錄
+node_modules/
+dist/
+.env
+
+# 系統檔案
+.DS_Store
+*.log

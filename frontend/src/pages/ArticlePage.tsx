@@ -1,0 +1,201 @@
+import { useEffect, useState, useCallback } from 'react';
+import { useParams, Link } from 'react-router-dom';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
+import {
+  fetchArticle,
+  fetchProgress,
+  toggleCheckItem,
+  getUserId,
+  type ProgressItem,
+} from '../api';
+
+/** 分類名稱轉換 */
+const CATEGORY_PREFIX: Record<string, string> = {
+  technique: 'tech',
+  theory: 'theory',
+  ghost: 'ghost',
+  dinner: 'dinner',
+};
+
+const CATEGORY_LABELS: Record<string, string> = {
+  technique: '🎸 技巧訓練',
+  theory: '🎵 樂理',
+  ghost: '👻 GHOST 教學',
+  dinner: '🍽️ 晚餐歌教學',
+};
+
+export default function ArticlePage() {
+  const { category, filename } = useParams<{ category: string; filename: string }>();
+  const [content, setContent] = useState('');
+  const [checkItems, setCheckItems] = useState<string[]>([]);
+  const [completedItems, setCompletedItems] = useState<number[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+
+  /** 從檔名提取 articleId */
+  const getArticleId = useCallback((): string => {
+    if (!category || !filename) return '';
+    const prefix = CATEGORY_PREFIX[category] || category;
+    const match = filename.match(/^(\d+)/);
+    const num = match ? match[1] : '00';
+    return `${prefix}_${num}`;
+  }, [category, filename]);
+
+  /** 從 Markdown 內容中提取檢查清單項目 */
+  const extractCheckItems = (md: string): string[] => {
+    const regex = /^- \[[ x]\] (.+)$/gm;
+    const items: string[] = [];
+    let match;
+    while ((match = regex.exec(md)) !== null) {
+      items.push(match[1]!);
+    }
+    return items;
+  };
+
+  useEffect(() => {
+    const load = async () => {
+      if (!category || !filename) return;
+      try {
+        const userId = getUserId();
+        const articleId = getArticleId();
+
+        const [articleContent, progressList] = await Promise.all([
+          fetchArticle(category, filename),
+          fetchProgress(userId),
+        ]);
+
+        setContent(articleContent);
+        setCheckItems(extractCheckItems(articleContent));
+
+        // 找到此篇的進度
+        const articleProgress = progressList.find(
+          (p: ProgressItem) => p.articleId === articleId
+        );
+        setCompletedItems(articleProgress?.completedItems || []);
+      } catch (err) {
+        console.error('載入文章失敗:', err);
+        setError('無法載入文章，請確認後端服務是否啟動');
+      } finally {
+        setLoading(false);
+      }
+    };
+    load();
+  }, [category, filename, getArticleId]);
+
+  /** 處理勾選事件 */
+  const handleToggle = async (index: number) => {
+    try {
+      const userId = getUserId();
+      const articleId = getArticleId();
+      const result = await toggleCheckItem(userId, articleId, index);
+      setCompletedItems(result.completedItems);
+    } catch (err) {
+      console.error('更新失敗:', err);
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-[60vh]">
+        <div className="w-12 h-12 border-4 border-primary-500/30 border-t-primary-500 rounded-full animate-spin" />
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="text-center py-16">
+        <p className="text-5xl mb-4">⚠️</p>
+        <p className="text-gray-400">{error}</p>
+      </div>
+    );
+  }
+
+  // 移除原始 Markdown 中的 checklist，改用互動版本
+  const contentWithoutChecklist = content.replace(/## ✅ 本篇檢查清單[\s\S]*?(?=\n---|\n##|$)/, '');
+
+  return (
+    <div className="animate-fade-in">
+      {/* 麵包屑 */}
+      <div className="flex items-center gap-2 text-sm text-gray-500 mb-6">
+        <Link to="/" className="hover:text-primary-400 transition-colors">首頁</Link>
+        <span>/</span>
+        <Link to={`/${category}`} className="hover:text-primary-400 transition-colors">
+          {CATEGORY_LABELS[category || ''] || category}
+        </Link>
+        <span>/</span>
+        <span className="text-gray-300 truncate max-w-[200px]">
+          {filename?.replace('.md', '').replace(/^\d+_/, '')}
+        </span>
+      </div>
+
+      {/* 文章內容 */}
+      <article className="prose-guitar">
+        <ReactMarkdown remarkPlugins={[remarkGfm]}>
+          {contentWithoutChecklist}
+        </ReactMarkdown>
+      </article>
+
+      {/* 互動式檢查清單 */}
+      {checkItems.length > 0 && (
+        <div className="glass-card p-6 mt-10">
+          <h2 className="text-xl font-semibold text-primary-400 mb-4 flex items-center gap-2">
+            ✅ 本篇檢查清單
+            <span className="text-sm font-normal text-gray-500">
+              ({completedItems.length}/{checkItems.length})
+            </span>
+          </h2>
+
+          {/* 進度條 */}
+          <div className="w-full h-2 bg-surface-700 rounded-full overflow-hidden mb-5">
+            <div
+              className="h-full bg-gradient-to-r from-green-500 to-emerald-400 rounded-full transition-all duration-500"
+              style={{ width: `${checkItems.length > 0 ? (completedItems.length / checkItems.length) * 100 : 0}%` }}
+            />
+          </div>
+
+          <div className="space-y-2">
+            {checkItems.map((item, index) => {
+              const isCompleted = completedItems.includes(index);
+              return (
+                <button
+                  key={index}
+                  onClick={() => handleToggle(index)}
+                  className={`w-full text-left flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 ${
+                    isCompleted
+                      ? 'bg-green-500/10 border border-green-500/20 text-green-300'
+                      : 'bg-surface-800/50 border border-surface-700/50 text-gray-300 hover:bg-surface-700/50 hover:border-surface-600'
+                  }`}
+                >
+                  <div className={`w-5 h-5 rounded-md border-2 flex items-center justify-center shrink-0 transition-all ${
+                    isCompleted
+                      ? 'bg-green-500 border-green-500'
+                      : 'border-gray-600 hover:border-primary-500'
+                  }`}>
+                    {isCompleted && (
+                      <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                      </svg>
+                    )}
+                  </div>
+                  <span className={isCompleted ? 'line-through opacity-70' : ''}>
+                    {item}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+
+          {/* 全部完成提示 */}
+          {completedItems.length === checkItems.length && checkItems.length > 0 && (
+            <div className="mt-5 p-4 bg-gradient-to-r from-green-500/10 to-emerald-500/10 border border-green-500/20 rounded-xl text-center">
+              <p className="text-lg font-semibold text-green-400">🎉 恭喜完成本篇所有項目！</p>
+              <p className="text-sm text-green-500/70 mt-1">你的進度已自動儲存</p>
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}

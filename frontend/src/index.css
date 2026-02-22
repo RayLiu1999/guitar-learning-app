@@ -1,0 +1,95 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+TC:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-surface-950 text-gray-100 font-sans antialiased;
+  }
+
+  /* 自訂捲軸樣式 */
+  ::-webkit-scrollbar {
+    @apply w-2;
+  }
+  ::-webkit-scrollbar-track {
+    @apply bg-surface-900;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-surface-700 rounded-full;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-primary-500;
+  }
+}
+
+@layer components {
+  /* Markdown 文章內的樣式 */
+  .prose-guitar h1 {
+    @apply text-3xl font-bold text-primary-300 mb-6 mt-2 border-b border-surface-700 pb-3;
+  }
+  .prose-guitar h2 {
+    @apply text-2xl font-semibold text-primary-400 mb-4 mt-8;
+  }
+  .prose-guitar h3 {
+    @apply text-xl font-semibold text-accent-400 mb-3 mt-6;
+  }
+  .prose-guitar h4 {
+    @apply text-lg font-medium text-gray-200 mb-2 mt-4;
+  }
+  .prose-guitar p {
+    @apply text-gray-300 leading-relaxed mb-4;
+  }
+  .prose-guitar ul,
+  .prose-guitar ol {
+    @apply text-gray-300 mb-4 pl-6;
+  }
+  .prose-guitar li {
+    @apply mb-1;
+  }
+  .prose-guitar blockquote {
+    @apply border-l-4 border-primary-500 bg-primary-950/30 pl-4 py-2 my-4 italic text-primary-200 rounded-r-lg;
+  }
+  .prose-guitar pre {
+    @apply bg-surface-900 border border-surface-700 rounded-xl p-4 my-4 overflow-x-auto text-sm;
+  }
+  .prose-guitar code {
+    @apply font-mono text-accent-300;
+  }
+  .prose-guitar pre code {
+    @apply text-gray-300;
+  }
+  .prose-guitar table {
+    @apply w-full border-collapse my-4;
+  }
+  .prose-guitar thead {
+    @apply bg-surface-800;
+  }
+  .prose-guitar th {
+    @apply text-left px-4 py-2 text-primary-300 font-semibold border-b border-surface-600;
+  }
+  .prose-guitar td {
+    @apply px-4 py-2 text-gray-300 border-b border-surface-800;
+  }
+  .prose-guitar tbody tr:hover {
+    @apply bg-surface-800/50 transition-colors;
+  }
+  .prose-guitar hr {
+    @apply border-surface-700 my-8;
+  }
+  .prose-guitar a {
+    @apply text-primary-400 hover:text-primary-300 underline underline-offset-2 transition-colors;
+  }
+  .prose-guitar strong {
+    @apply text-gray-100 font-semibold;
+  }
+  .prose-guitar em {
+    @apply text-accent-300;
+  }
+
+  /* 玻璃擬態卡片 */
+  .glass-card {
+    @apply bg-surface-800/60 backdrop-blur-xl border border-surface-700/50 rounded-2xl;
+  }
+}
