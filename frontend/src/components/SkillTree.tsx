@@ -54,7 +54,7 @@ const SKILL_GROUPS: SkillGroup[] = [
   },
   {
     label: '專題',
-    color: '#a855f7', // purple-500
+    color: '#F59E0B', // amber-500 (primary)
     nodes: [
       { id: 'tech_14', label: '泛音技巧',     x: 820, y: 150, requires: ['tech_11'] },
       { id: 'tech_15', label: '搖桿技巧',     x: 820, y: 250, requires: ['tech_12'] },
@@ -106,7 +106,7 @@ export function SkillTree({ progress }: Props) {
                 y1={from.y}
                 x2={node.x}
                 y2={node.y}
-                stroke={reqDone ? '#4ade80' : '#374151'}
+                stroke={reqDone ? '#FBBF24' : '#3A362F'}
                 strokeWidth={2}
                 strokeDasharray={reqDone ? undefined : '4 4'}
                 opacity={0.6}
@@ -120,9 +120,9 @@ export function SkillTree({ progress }: Props) {
           group.nodes.map((node) => {
             const done = isCompleted(progress, node.id);
             const unlocked = isUnlocked(progress, node);
-            const circleFill = done ? group.color : unlocked ? '#1e293b' : '#111827';
-            const circleStroke = done ? group.color : unlocked ? group.color : '#374151';
-            const textFill = done ? '#fff' : unlocked ? '#e5e7eb' : '#4b5563';
+            const circleFill = done ? group.color : unlocked ? '#262320' : '#151311';
+            const circleStroke = done ? group.color : unlocked ? group.color : '#3A362F';
+            const textFill = done ? '#fff' : unlocked ? '#E8E4DF' : '#504B44';
 
             return (
               <g key={node.id} role="img" aria-label={`${node.label}：${done ? '已完成' : unlocked ? '可學習' : '尚未解鎖'}`}>
@@ -156,7 +156,7 @@ export function SkillTree({ progress }: Props) {
 
                 {/* 鎖定圖示 */}
                 {!done && !unlocked && (
-                  <text x={node.x} y={node.y + 5} textAnchor="middle" fontSize={12} fill="#4b5563">
+                  <text x={node.x} y={node.y + 5} textAnchor="middle" fontSize={12} fill="#504B44">
                     🔒
                   </text>
                 )}
@@ -181,7 +181,7 @@ export function SkillTree({ progress }: Props) {
         {SKILL_GROUPS.map((group, i) => (
           <g key={group.label} transform={`translate(${50 + i * 120}, 10)`}>
             <circle r={6} fill={group.color} />
-            <text x={12} y={5} fontSize={10} fill="#9ca3af" fontFamily="system-ui, sans-serif">
+            <text x={12} y={5} fontSize={10} fill="#9C9489" fontFamily="system-ui, sans-serif">
               {group.label}
             </text>
           </g>

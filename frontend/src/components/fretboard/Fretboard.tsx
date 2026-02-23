@@ -66,7 +66,7 @@ export function Fretboard({
   return (
     <div className="glass-card p-6 overflow-x-auto custom-scrollbar my-6 group/fretboard">
       <div className="flex items-center justify-between mb-4 px-2">
-        <h3 className="text-xl font-bold font-heading text-neutral-800 dark:text-neutral-100 tracking-wide">
+        <h3 className="text-xl font-bold text-gray-100 tracking-wide">
           {chord ? `🎸 ${chord} 和弦指板` : '🎸 互動指板'}
         </h3>
         <button 
@@ -90,7 +90,7 @@ export function Fretboard({
             y={TOP_MARGIN}
             width={currentX - 20}
             height={(STRINGS.length - 1) * STRING_SPACING}
-            fill="#2d2218"
+            fill="#2A1F14"
             rx={2}
           />
 
@@ -111,13 +111,13 @@ export function Fretboard({
             const centerX = LEFT_MARGIN + x + w / 2;
             const centerY = TOP_MARGIN + (STRINGS.length - 1) * STRING_SPACING / 2;
             if (inlayFrets.includes(fretIdx) && fretIdx <= frets) {
-              return <circle key={`inlay-${fretIdx}`} cx={centerX} cy={centerY} r={6} fill="#9ca3af" opacity={0.6} />;
+              return <circle key={`inlay-${fretIdx}`} cx={centerX} cy={centerY} r={6} fill="#9C9489" opacity={0.6} />;
             }
             if (fretIdx === 12 && fretIdx <= frets) {
               return (
                 <g key={`inlay-${fretIdx}`}>
-                  <circle cx={centerX} cy={centerY - 15} r={5} fill="#9ca3af" opacity={0.6} />
-                  <circle cx={centerX} cy={centerY + 15} r={5} fill="#9ca3af" opacity={0.6} />
+                  <circle cx={centerX} cy={centerY - 15} r={5} fill="#9C9489" opacity={0.6} />
+                  <circle cx={centerX} cy={centerY + 15} r={5} fill="#9C9489" opacity={0.6} />
                 </g>
               );
             }
@@ -130,7 +130,7 @@ export function Fretboard({
               key={`fret-${i}`}
               x1={LEFT_MARGIN + x + fretWidths[i]} y1={TOP_MARGIN}
               x2={LEFT_MARGIN + x + fretWidths[i]} y2={TOP_MARGIN + (STRINGS.length - 1) * STRING_SPACING}
-              stroke="#94a3b8" strokeWidth={2}
+              stroke="#9C9489" strokeWidth={2}
             />
           ))}
 
@@ -139,7 +139,7 @@ export function Fretboard({
             <text
               key={`fret-num-${i}`}
               x={LEFT_MARGIN + x + fretWidths[i] / 2} y={totalHeight - 5}
-              fill="#6b7280" fontSize={10} textAnchor="middle" fontFamily="monospace"
+              fill="#706A60" fontSize={10} textAnchor="middle" fontFamily="monospace"
             >
               {i}
             </text>
@@ -152,9 +152,9 @@ export function Fretboard({
               <g key={`string-${sIdx}`}>
                 <line
                   x1={LEFT_MARGIN} y1={y} x2={LEFT_MARGIN + currentX} y2={y}
-                  stroke="#cbd5e1" strokeWidth={1 + sIdx * 0.4}
+                  stroke="#D5CFC8" strokeWidth={1 + sIdx * 0.4}
                 />
-                <text x={LEFT_MARGIN - 15} y={y + 4} fill="#94a3b8" fontSize={12} fontWeight="bold" textAnchor="end">
+                <text x={LEFT_MARGIN - 15} y={y + 4} fill="#9C9489" fontSize={12} fontWeight="bold" textAnchor="end">
                   {string.tuning}
                 </text>
 
@@ -181,13 +181,13 @@ export function Fretboard({
                         <g className="transition-transform duration-200 hover:scale-110 origin-center" style={{ transformOrigin: `${cx}px ${y}px` }}>
                           <circle
                             cx={cx} cy={y} r={fIdx === 0 ? 8 : 11}
-                            fill={fIdx === 0 ? 'transparent' : isUser ? '#f59e0b' : '#0ea5e9'}
-                            stroke={isUser ? '#f59e0b' : '#0ea5e9'}
+                            fill={fIdx === 0 ? 'transparent' : isUser ? '#38BDF8' : '#F59E0B'}
+                            stroke={isUser ? '#38BDF8' : '#F59E0B'}
                             strokeWidth={2}
                           />
                           <text
                             x={cx} y={y + 3.5}
-                            fill={fIdx === 0 ? (isUser ? '#f59e0b' : '#0ea5e9') : '#fff'}
+                            fill={fIdx === 0 ? (isUser ? '#38BDF8' : '#F59E0B') : '#fff'}
                             fontSize={fIdx === 0 ? 9 : 10} fontWeight="bold" textAnchor="middle"
                             className="pointer-events-none"
                           >

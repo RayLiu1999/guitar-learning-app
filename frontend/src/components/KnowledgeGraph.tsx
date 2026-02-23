@@ -18,10 +18,10 @@ interface GraphLink {
 }
 
 const CATEGORY_COLORS: Record<string, string> = {
-  technique: '#6366f1', // Indigo
-  theory: '#0ea5e9',    // Sky
-  ghost: '#a855f7',     // Purple
-  dinner: '#f43f5e',    // Rose
+  technique: '#F59E0B', // Amber (primary)
+  theory: '#0EA5E9',    // Sky (accent)
+  ghost: '#ef4444',     // Red
+  dinner: '#22c55e',    // Green
 };
 
 export function KnowledgeGraph() {
@@ -112,7 +112,7 @@ export function KnowledgeGraph() {
   return (
     <div className="glass-card p-6 relative flex flex-col h-[500px]" ref={containerRef}>
       <div className="mb-4 flex items-center justify-between z-10">
-        <h2 className="text-xl font-bold font-heading text-neutral-100 flex items-center gap-2">
+        <h2 className="text-xl font-bold text-gray-100 flex items-center gap-2">
           <span>🌌</span> 知識圖譜
         </h2>
         <div className="flex gap-3 text-xs font-medium">
@@ -122,13 +122,13 @@ export function KnowledgeGraph() {
           {Object.entries(CATEGORY_COLORS).map(([cat, color]) => (
             <div key={cat} className="flex items-center gap-1.5">
               <span className="w-3 h-3 rounded-full" style={{ backgroundColor: color }}></span>
-              <span className="capitalize text-neutral-600">{cat}</span>
+              <span className="capitalize text-gray-500">{cat}</span>
             </div>
           ))}
         </div>
       </div>
 
-      <div className="flex-1 bg-surface-50 dark:bg-surface-900/50 rounded-xl overflow-hidden shadow-inner border border-surface-200 dark:border-surface-700">
+      <div className="flex-1 bg-surface-900/50 rounded-xl overflow-hidden shadow-inner border border-surface-700">
         {dimensions.width > 0 && dimensions.height > 100 && (
           <ForceGraph2D
             key={`${dimensions.width}-${dimensions.height}`}
@@ -140,7 +140,7 @@ export function KnowledgeGraph() {
             nodeLabel="name"
             nodeColor="color"
             nodeRelSize={6} // 稍微加粗一點
-            linkColor={() => '#94a3b8'} // 使用 Explicit color (surface-400)
+            linkColor={() => '#9C9489'} // 使用 Explicit color (surface-400)
             linkWidth={1.5}
             linkDirectionalArrowLength={4}
             linkDirectionalArrowRelPos={1}

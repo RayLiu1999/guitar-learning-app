@@ -18,7 +18,7 @@ function getStageLabel(id: string): { label: string; color: string } {
     if (num <= 5) return { label: '🟢 初級', color: 'text-green-400 bg-green-500/10 border-green-500/20' };
     if (num <= 10) return { label: '🟡 中級', color: 'text-yellow-400 bg-yellow-500/10 border-yellow-500/20' };
     if (num <= 15) return { label: '🔴 高級', color: 'text-red-400 bg-red-500/10 border-red-500/20' };
-    return { label: '🎯 專題', color: 'text-purple-400 bg-purple-500/10 border-purple-500/20' };
+    return { label: '🎯 專題', color: 'text-primary-400 bg-primary-500/10 border-primary-500/20' };
   }
   return { label: '', color: '' };
 }

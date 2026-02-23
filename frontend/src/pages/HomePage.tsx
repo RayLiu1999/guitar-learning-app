@@ -14,25 +14,25 @@ const CATEGORY_META: Record<string, { label: string; emoji: string; description:
     label: '技巧訓練',
     emoji: '🎸',
     description: '從撥弦到速彈，系統化的電吉他技巧訓練',
-    gradient: 'from-indigo-500 to-purple-600',
+    gradient: 'from-amber-500 to-orange-600',
   },
   theory: {
     label: '樂理',
     emoji: '🎵',
     description: '以指板為視角的樂理概念與和聲分析',
-    gradient: 'from-emerald-500 to-teal-600',
+    gradient: 'from-sky-500 to-cyan-600',
   },
   ghost: {
     label: 'GHOST 教學',
     emoji: '👻',
     description: '歌曲分段教學與效果器設定',
-    gradient: 'from-orange-500 to-red-600',
+    gradient: 'from-rose-500 to-red-600',
   },
   dinner: {
     label: '晚餐歌教學',
     emoji: '🍽️',
     description: '和弦全攻略與完整練習計畫',
-    gradient: 'from-pink-500 to-rose-600',
+    gradient: 'from-teal-500 to-emerald-600',
   },
 };
 

@@ -217,7 +217,7 @@ export default function ArticlePage() {
               const isBlock = !inline || isMultiline || match;
 
               return isBlock ? (
-                <div className="w-full overflow-x-auto pb-2 custom-scrollbar my-4 rounded-xl bg-[#1e1e1e] border border-surface-700 shadow-inner">
+                <div className="w-full overflow-x-auto pb-2 custom-scrollbar my-4 rounded-xl bg-[#151311] border border-surface-700 shadow-inner">
                   <code 
                     className={className} 
                     {...props} 
@@ -227,7 +227,7 @@ export default function ArticlePage() {
                       minWidth: 'max-content',
                       fontFamily: '"JetBrains Mono", "ui-monospace", monospace',
                       lineHeight: '1.4',
-                      color: '#d4d4d4'
+                      color: '#E8E4DF'
                     }}
                   >
                     {children}

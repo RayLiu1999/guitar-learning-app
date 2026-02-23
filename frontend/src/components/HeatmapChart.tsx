@@ -12,8 +12,8 @@ interface HeatmapChartProps {
 }
 
 const theme: ThemeInput = {
-  light: ['#1e293b', '#0ea5e9', '#0284c7', '#0369a1', '#075985'],
-  dark: ['#1e293b', '#0ea5e9', '#0284c7', '#0369a1', '#075985'],
+  light: ['#262320', '#92400E', '#B45309', '#D97706', '#F59E0B'],
+  dark: ['#262320', '#92400E', '#B45309', '#D97706', '#F59E0B'],
 };
 
 export const HeatmapChart = ({ logs }: HeatmapChartProps) => {
@@ -47,7 +47,7 @@ export const HeatmapChart = ({ logs }: HeatmapChartProps) => {
 
   return (
     <div className="glass-card p-6 overflow-x-auto w-full max-w-full custom-scrollbar">
-      <h3 className="text-xl font-bold font-heading text-neutral-800 dark:text-neutral-100 mb-4 tracking-wide">
+      <h3 className="text-xl font-bold text-gray-100 mb-4 tracking-wide">
         🎸 練習足跡
       </h3>
       <div className="min-w-[800px]">

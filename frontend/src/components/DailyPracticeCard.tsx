@@ -72,10 +72,10 @@ export function DailyPracticeCard() {
   if (loading) {
     return (
       <div className="glass-card p-6 animate-pulse">
-        <div className="h-6 bg-slate-700/50 rounded w-1/3 mb-4"></div>
+        <div className="h-6 bg-surface-700/50 rounded w-1/3 mb-4"></div>
         <div className="space-y-3">
-          <div className="h-12 bg-slate-700/30 rounded"></div>
-          <div className="h-12 bg-slate-700/30 rounded"></div>
+          <div className="h-12 bg-surface-700/30 rounded"></div>
+          <div className="h-12 bg-surface-700/30 rounded"></div>
         </div>
       </div>
     );
@@ -97,7 +97,7 @@ export function DailyPracticeCard() {
           📅
         </span>
         <h2
-          className="text-xl font-bold font-heading text-neutral-800 dark:text-neutral-100 tracking-wide"
+          className="text-xl font-bold text-gray-100 tracking-wide"
           id="daily-menu-title"
         >
           今日推薦菜單
@@ -115,7 +115,7 @@ export function DailyPracticeCard() {
             <Link
               to={info.link}
               key={item.articleId}
-              className="flex items-center justify-between p-4 rounded-xl bg-surface-50 dark:bg-surface-800/50 border border-surface-200 dark:border-surface-700 hover:border-primary-400 dark:hover:border-primary-500 transition-all hover:-translate-y-0.5"
+              className="flex items-center justify-between p-4 rounded-xl bg-surface-800/50 border border-surface-700 hover:border-primary-500 transition-all hover:-translate-y-0.5"
             >
               <div className="flex flex-col gap-1">
                 <span
@@ -124,7 +124,7 @@ export function DailyPracticeCard() {
                   {config.icon} {config.text}
                 </span>
                 <span
-                  className="font-medium text-neutral-700 dark:text-neutral-200"
+                  className="font-medium text-gray-200"
                   data-testid={`menu-item-${item.articleId}`}
                 >
                   {info.title}
