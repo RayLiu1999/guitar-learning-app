@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { fetchCatalog, fetchProgress, fetchPracticeLogs, fetchAchievements, getUserId, type Catalog, type ProgressItem, type PracticeLogItem, type BadgeItem } from '../api';
 import { HeatmapChart } from '../components/HeatmapChart';
 import { AchievementPanel } from '../components/AchievementPanel';
+import { Metronome } from '../components/Metronome';
 
 /** 分類元資料 */
 const CATEGORY_META: Record<string, { label: string; emoji: string; description: string; gradient: string }> = {
@@ -136,6 +137,11 @@ export default function HomePage() {
       {/* 成就徽章面板 */}
       <div className="mb-8">
         <AchievementPanel badges={badges} />
+      </div>
+
+      {/* 節拍器 */}
+      <div className="mb-8">
+        <Metronome />
       </div>
 
       {/* 分類卡片 */}
