@@ -4,6 +4,7 @@ import { fetchCatalog, fetchProgress, fetchPracticeLogs, fetchAchievements, getU
 import { HeatmapChart } from '../components/HeatmapChart';
 import { AchievementPanel } from '../components/AchievementPanel';
 import { Metronome } from '../components/Metronome';
+import { SkillTree } from '../components/SkillTree';
 
 /** 分類元資料 */
 const CATEGORY_META: Record<string, { label: string; emoji: string; description: string; gradient: string }> = {
@@ -142,6 +143,11 @@ export default function HomePage() {
       {/* 節拍器 */}
       <div className="mb-8">
         <Metronome />
+      </div>
+
+      {/* 技能樹 */}
+      <div className="mb-8">
+        <SkillTree progress={progress} />
       </div>
 
       {/* 分類卡片 */}
