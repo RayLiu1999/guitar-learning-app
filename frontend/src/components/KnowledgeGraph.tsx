@@ -110,13 +110,14 @@ export function KnowledgeGraph() {
         </div>
       </div>
 
-      <div className="flex-1 bg-surface-50 rounded-xl overflow-hidden shadow-inner border border-surface-200">
+      <div className="flex-1 bg-surface-50 dark:bg-surface-900/50 rounded-xl overflow-hidden shadow-inner border border-surface-200 dark:border-surface-700">
         {dimensions.width > 0 && (
           <ForceGraph2D
             ref={fgRef}
             width={dimensions.width - 48} // 扣除 padding
             height={dimensions.height - 80} // 扣除 padding 與 header
             graphData={data}
+            backgroundColor="transparent"
             nodeLabel="name"
             nodeColor="color"
             nodeRelSize={4}

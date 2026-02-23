@@ -39,13 +39,13 @@ export function Metronome() {
       <div className="flex items-center justify-center gap-3 mb-6">
         <button
           onClick={() => setBpm(bpm - 10)}
-          className="px-3 py-1.5 rounded-lg bg-surface-700 hover:bg-surface-600 text-gray-300 text-sm font-mono transition-colors"
+          className="px-3 py-1.5 rounded-lg bg-surface-700 hover:bg-surface-600 text-gray-100 text-sm font-mono transition-colors"
         >
           -10
         </button>
         <button
           onClick={() => setBpm(bpm - 1)}
-          className="px-3 py-1.5 rounded-lg bg-surface-700 hover:bg-surface-600 text-gray-300 text-sm font-mono transition-colors"
+          className="px-3 py-1.5 rounded-lg bg-surface-700 hover:bg-surface-600 text-gray-100 text-sm font-mono transition-colors"
         >
           -1
         </button>
@@ -66,13 +66,13 @@ export function Metronome() {
 
         <button
           onClick={() => setBpm(bpm + 1)}
-          className="px-3 py-1.5 rounded-lg bg-surface-700 hover:bg-surface-600 text-gray-300 text-sm font-mono transition-colors"
+          className="px-3 py-1.5 rounded-lg bg-surface-700 hover:bg-surface-600 text-gray-100 text-sm font-mono transition-colors"
         >
           +1
         </button>
         <button
           onClick={() => setBpm(bpm + 10)}
-          className="px-3 py-1.5 rounded-lg bg-surface-700 hover:bg-surface-600 text-gray-300 text-sm font-mono transition-colors"
+          className="px-3 py-1.5 rounded-lg bg-surface-700 hover:bg-surface-600 text-gray-100 text-sm font-mono transition-colors"
         >
           +10
         </button>
@@ -135,7 +135,7 @@ export function Metronome() {
             className={`px-2.5 py-1 rounded-lg text-xs font-mono transition-all ${
               bpm === preset
                 ? 'bg-primary-500/20 text-primary-300 border border-primary-500/30'
-                : 'text-gray-600 hover:text-gray-400 hover:bg-surface-700'
+                : 'text-gray-400 hover:text-gray-100 hover:bg-surface-700'
             }`}
           >
             {preset}

@@ -196,8 +196,10 @@ export default function ArticlePage() {
                   // 嘗試解析 JSON 內容
                   const fretboardProps = JSON.parse(String(children).trim());
                   return (
-                    <div className="not-prose my-6">
-                      <Fretboard {...fretboardProps} />
+                    <div className="not-prose my-6 w-full overflow-x-auto pb-4 custom-scrollbar">
+                      <div className="min-w-[800px] flex justify-center">
+                        <Fretboard {...fretboardProps} />
+                      </div>
                     </div>
                   );
                 } catch {
@@ -210,11 +212,13 @@ export default function ArticlePage() {
               }
 
               return !inline && match ? (
-                <code className={className} {...props}>
-                  {children}
-                </code>
+                <div className="w-full overflow-x-auto pb-2 custom-scrollbar my-4 rounded-lg bg-[#282c34]">
+                  <code className={className} {...props} style={{ display: 'block', padding: '1rem', minWidth: 'max-content' }}>
+                    {children}
+                  </code>
+                </div>
               ) : (
-                <code className="bg-surface-700 text-primary-300 px-1.5 py-0.5 rounded text-sm" {...props}>
+                <code className="bg-surface-200 dark:bg-surface-700 text-primary-600 dark:text-primary-300 px-1.5 py-0.5 rounded text-sm break-all" {...props}>
                   {children}
                 </code>
               );

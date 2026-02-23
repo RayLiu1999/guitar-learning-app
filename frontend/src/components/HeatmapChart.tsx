@@ -46,7 +46,7 @@ export const HeatmapChart = ({ logs }: HeatmapChartProps) => {
   }, [logs]);
 
   return (
-    <div className="glass-card p-6 overflow-x-auto custom-scrollbar">
+    <div className="glass-card p-6 overflow-x-auto w-full max-w-full custom-scrollbar">
       <h3 className="text-xl font-bold font-heading text-neutral-800 dark:text-neutral-100 mb-4 tracking-wide">
         🎸 練習足跡
       </h3>
