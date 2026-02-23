@@ -89,7 +89,7 @@ export default function ArticlePage() {
       const userId = getUserId();
       const articleId = getArticleId();
       const result = await toggleCheckItem(userId, articleId, index);
-      setCompletedItems(result.completedItems);
+      setCompletedItems(result.progress.completedItems);
     } catch (err) {
       console.error('更新失敗:', err);
     }

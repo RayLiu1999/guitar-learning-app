@@ -4,6 +4,7 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import progressRoutes from './routes/progress';
 import contentRoutes from './routes/content';
+import achievementRoutes from './routes/achievements';
 
 dotenv.config();
 
@@ -18,6 +19,7 @@ app.use(express.json());
 // 路由
 app.use('/api/progress', progressRoutes);
 app.use('/api/content', contentRoutes);
+app.use('/api/achievements', achievementRoutes);
 
 // 健康檢查端點
 app.get('/api/health', (_req, res) => {

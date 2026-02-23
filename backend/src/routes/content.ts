@@ -53,14 +53,11 @@ router.get('/catalog', (_req: Request, res: Response) => {
 
     for (const [category, dir] of Object.entries(CONTENT_DIRS)) {
       if (!fs.existsSync(dir)) {
-        console.warn(`[API /catalog] 找不到目錄: ${dir}`);
         catalog[category] = [];
         continue;
       }
 
-      console.log(`[API /catalog] 成功找到目錄: ${dir}`);
       const files = getAllMdFiles(dir).sort();
-      console.log(`[API /catalog] 目錄 ${category} 中的檔案數量:`, files.length);
 
       catalog[category] = files.map((relPath) => {
         // 從檔名提取編號
@@ -68,7 +65,7 @@ router.get('/catalog', (_req: Request, res: Response) => {
         const match = basename.match(/^(\d+)/);
         const num = match ? match[1]! : '00';
         const prefix = CATEGORY_PREFIX[category] || category;
-        const id = `${prefix}_${num}_${Buffer.from(relPath).toString('base64').substring(0, 5)}`; // 避免重複 id
+        const id = `${prefix}_${num}`;  // 穩定格式：tech_01, theory_02 等
 
         // 從檔名提取標題，移除副檔名與前面的數字
         const title = basename

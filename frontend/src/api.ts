@@ -22,6 +22,20 @@ export interface PracticeLogItem {
   articles: string[];
 }
 
+export interface BadgeItem {
+  id: string;
+  emoji: string;
+  name: string;
+  description: string;
+  unlocked: boolean;
+  unlockedAt: string | null;
+}
+
+export interface ToggleResult {
+  progress: ProgressItem;
+  newlyUnlocked: BadgeItem[];
+}
+
 /** 取得使用者 ID（MVP 階段用 localStorage 產生的 UUID） */
 export function getUserId(): string {
   let userId = localStorage.getItem('guitar-user-id');
@@ -59,7 +73,7 @@ export async function toggleCheckItem(
   userId: string,
   articleId: string,
   itemIndex: number
-): Promise<ProgressItem> {
+): Promise<ToggleResult> {
   const res = await fetch(`${API_BASE}/progress/toggle`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -73,5 +87,12 @@ export async function toggleCheckItem(
 export async function fetchPracticeLogs(userId: string): Promise<PracticeLogItem[]> {
   const res = await fetch(`${API_BASE}/progress/practice-log?userId=${userId}`);
   if (!res.ok) throw new Error('無法載入打卡紀錄');
+  return res.json();
+}
+
+/** 取得使用者的徽章清單 */
+export async function fetchAchievements(userId: string): Promise<BadgeItem[]> {
+  const res = await fetch(`${API_BASE}/achievements?userId=${userId}`);
+  if (!res.ok) throw new Error('無法載入成就徽章');
   return res.json();
 }

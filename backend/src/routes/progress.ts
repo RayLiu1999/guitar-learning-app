@@ -1,6 +1,8 @@
 import { Router, type IRouter, Request, Response } from 'express';
 import Progress from '../models/Progress';
 import PracticeLog from '../models/PracticeLog';
+import { evaluateAndUnlockBadges } from '../services/achievementService';
+import { BADGE_MAP } from '../badges';
 
 const router: IRouter = Router();
 
@@ -73,7 +75,11 @@ router.post('/toggle', async (req: Request, res: Response) => {
       { upsert: true }
     );
 
-    res.json(progress);
+    // 解鎖成就徽章
+    const newBadgeIds = await evaluateAndUnlockBadges(userId);
+    const newlyUnlocked = newBadgeIds.map((id) => BADGE_MAP.get(id)).filter(Boolean);
+
+    res.json({ progress, newlyUnlocked });
   } catch (err) {
     console.error('更新進度失敗:', err);
     res.status(500).json({ error: '伺服器內部錯誤' });

@@ -25,7 +25,7 @@ describe('Progress API Integration Tests', () => {
       .send({ userId: mockUserId, articleId: articleA, itemIndex: 0 });
 
     expect(res.status).toBe(200);
-    expect(res.body.completedItems).toEqual([0]);
+    expect(res.body.progress.completedItems).toEqual([0]);
 
     // 驗證進度寫入 DB
     const progressInDb = await Progress.findOne({ userId: mockUserId, articleId: articleA });
@@ -50,7 +50,7 @@ describe('Progress API Integration Tests', () => {
       .send({ userId: mockUserId, articleId: articleA, itemIndex: 0 });
 
     expect(res.status).toBe(200);
-    expect(res.body.completedItems).toEqual([]);
+    expect(res.body.progress.completedItems).toEqual([]);
   });
 
   it('4. POST /api/progress/toggle - 同一天新增不同文章，應合併在同一筆打卡紀錄', async () => {
