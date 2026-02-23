@@ -6,10 +6,10 @@ const router: IRouter = Router();
 
 /** 教材分類與對應的資料夾路徑 */
 const CONTENT_DIRS: Record<string, string> = {
-  technique: path.resolve(__dirname, '../../../電吉他技巧訓練'),
-  theory: path.resolve(__dirname, '../../../電吉他樂理'),
-  ghost: path.resolve(__dirname, '../../../GHOST_電吉他教學系列'),
-  dinner: path.resolve(__dirname, '../../../晚餐歌_吉他教學系列'),
+  technique: path.resolve(__dirname, '../content/technique'),
+  theory: path.resolve(__dirname, '../content/theory'),
+  ghost: path.resolve(__dirname, '../content/ghost'),
+  dinner: path.resolve(__dirname, '../content/dinner'),
 };
 
 /** 前綴對照表，用於產生 articleId */
@@ -19,6 +19,29 @@ const CATEGORY_PREFIX: Record<string, string> = {
   ghost: 'ghost',
   dinner: 'dinner',
 };
+
+/** Helper: 遞迴取得目錄下所有 .md 檔案的相對路徑 */
+function getAllMdFiles(dir: string, baseDir: string = dir): string[] {
+  let results: string[] = [];
+  try {
+    const list = fs.readdirSync(dir);
+    list.forEach(file => {
+      const filePath = path.join(dir, file);
+      const stat = fs.statSync(filePath);
+      if (stat && stat.isDirectory()) {
+        // 遞迴進入子資料夾
+        results = results.concat(getAllMdFiles(filePath, baseDir));
+      } else if (file.endsWith('.md')) {
+        // 取得相對於 baseDir 的路徑 (例如: "01_基礎/01_撥弦.md")
+        results.push(path.relative(baseDir, filePath));
+      }
+    });
+  } catch (err) {
+    console.warn(`讀取目錄失敗: ${dir}`, err);
+  }
+
+  return results;
+}
 
 /**
  * 取得所有教材的目錄索引
@@ -30,27 +53,29 @@ router.get('/catalog', (_req: Request, res: Response) => {
 
     for (const [category, dir] of Object.entries(CONTENT_DIRS)) {
       if (!fs.existsSync(dir)) {
+        console.warn(`[API /catalog] 找不到目錄: ${dir}`);
         catalog[category] = [];
         continue;
       }
 
-      const files = fs.readdirSync(dir)
-        .filter((f) => f.endsWith('.md'))
-        .sort();
+      console.log(`[API /catalog] 成功找到目錄: ${dir}`);
+      const files = getAllMdFiles(dir).sort();
+      console.log(`[API /catalog] 目錄 ${category} 中的檔案數量:`, files.length);
 
-      catalog[category] = files.map((filename) => {
-        // 從檔名提取編號，例如 '01_撥弦基礎.md' → '01'
-        const match = filename.match(/^(\d+)/);
+      catalog[category] = files.map((relPath) => {
+        // 從檔名提取編號
+        const basename = path.basename(relPath);
+        const match = basename.match(/^(\d+)/);
         const num = match ? match[1]! : '00';
         const prefix = CATEGORY_PREFIX[category] || category;
-        const id = `${prefix}_${num}`;
+        const id = `${prefix}_${num}_${Buffer.from(relPath).toString('base64').substring(0, 5)}`; // 避免重複 id
 
-        // 從檔名提取標題
-        const title = filename
+        // 從檔名提取標題，移除副檔名與前面的數字
+        const title = basename
           .replace(/\.md$/, '')
-          .replace(/^\d+_/, '');
+          .replace(/^\d+_?/, '');
 
-        return { id, filename, title };
+        return { id, filename: encodeURIComponent(relPath), title };
       });
     }
 
@@ -65,12 +90,13 @@ router.get('/catalog', (_req: Request, res: Response) => {
  * 取得指定文章內容
  * GET /api/content/:category/:filename
  */
+// 使用 wildcard 取代原本的 :filename, 以支援帶有路徑分界線的 URI (雖然前端可送 encode 過的，但加上 wildcard 更保險，這裡我們用 param)
 router.get('/:category/:filename', (req: Request, res: Response) => {
   try {
     const category = req.params['category'] as string | undefined;
-    const filename = req.params['filename'] as string | undefined;
+    const encodedFilename = req.params['filename'] as string | undefined;
 
-    if (!category || !filename) {
+    if (!category || !encodedFilename) {
       res.status(400).json({ error: '缺少必要參數' });
       return;
     }
@@ -81,6 +107,7 @@ router.get('/:category/:filename', (req: Request, res: Response) => {
       return;
     }
 
+    const filename = decodeURIComponent(encodedFilename);
     const filePath = path.join(dir, filename);
 
     // 安全性檢查：防止路徑穿越
