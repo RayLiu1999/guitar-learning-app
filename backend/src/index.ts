@@ -24,18 +24,20 @@ app.get('/api/health', (_req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
 });
 
-// 連線 MongoDB 並啟動伺服器
-mongoose
-  .connect(MONGODB_URI)
-  .then(() => {
-    console.log('✅ MongoDB 連線成功');
-    app.listen(PORT, () => {
-      console.log(`🎸 後端伺服器運行於 http://localhost:${PORT}`);
+// 連線 MongoDB 並啟動伺服器 (僅在非測試環境下執行)
+if (process.env.NODE_ENV !== 'test') {
+  mongoose
+    .connect(MONGODB_URI)
+    .then(() => {
+      console.log('✅ MongoDB 連線成功');
+      app.listen(PORT, () => {
+        console.log(`🎸 後端伺服器運行於 http://localhost:${PORT}`);
+      });
+    })
+    .catch((err) => {
+      console.error('❌ MongoDB 連線失敗:', err);
+      process.exit(1);
     });
-  })
-  .catch((err) => {
-    console.error('❌ MongoDB 連線失敗:', err);
-    process.exit(1);
-  });
+}
 
 export default app;

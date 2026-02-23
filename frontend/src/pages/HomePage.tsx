@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { fetchCatalog, fetchProgress, getUserId, type Catalog, type ProgressItem } from '../api';
+import { fetchCatalog, fetchProgress, fetchPracticeLogs, getUserId, type Catalog, type ProgressItem, type PracticeLogItem } from '../api';
+import { HeatmapChart } from '../components/HeatmapChart';
 
 /** 分類元資料 */
 const CATEGORY_META: Record<string, { label: string; emoji: string; description: string; gradient: string }> = {
@@ -36,18 +37,21 @@ const ITEMS_PER_ARTICLE = 5;
 export default function HomePage() {
   const [catalog, setCatalog] = useState<Catalog>({});
   const [progress, setProgress] = useState<ProgressItem[]>([]);
+  const [practiceLogs, setPracticeLogs] = useState<PracticeLogItem[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const load = async () => {
       try {
         const userId = getUserId();
-        const [cat, prog] = await Promise.all([
+        const [cat, prog, logs] = await Promise.all([
           fetchCatalog(),
           fetchProgress(userId),
+          fetchPracticeLogs(userId),
         ]);
         setCatalog(cat);
         setProgress(prog);
+        setPracticeLogs(logs);
       } catch (err) {
         console.error('載入失敗:', err);
       } finally {
@@ -118,6 +122,11 @@ export default function HomePage() {
         <p className="text-sm text-gray-500 mt-2">
           已完成 {progress.reduce((s, p) => s + p.completedItems.length, 0)} 個檢查項目
         </p>
+      </div>
+
+      {/* 打卡熱力圖 */}
+      <div className="mb-8">
+        <HeatmapChart logs={practiceLogs} />
       </div>
 
       {/* 分類卡片 */}

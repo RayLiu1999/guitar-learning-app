@@ -38,7 +38,6 @@ router.post('/toggle', async (req: Request, res: Response) => {
       return;
     }
 
-    // 找到或建立該篇文章的進度紀錄
     let progress = await Progress.findOne({ userId, articleId });
 
     if (!progress) {
@@ -48,18 +47,23 @@ router.post('/toggle', async (req: Request, res: Response) => {
         completedItems: [itemIndex],
         lastUpdated: new Date(),
       });
+      await progress.save();
     } else {
-      // 切換：已存在則移除，不存在則加入
-      const idx = progress.completedItems.indexOf(itemIndex);
-      if (idx > -1) {
-        progress.completedItems.splice(idx, 1);
-      } else {
-        progress.completedItems.push(itemIndex);
-      }
-      progress.lastUpdated = new Date();
-    }
+      // 確保陣列內元素的型別匹配 (轉成數字比對)
+      const numericItemIndex = Number(itemIndex);
+      const isCompleted = progress.completedItems.includes(numericItemIndex);
 
-    await progress.save();
+      if (isCompleted) {
+        progress.completedItems = progress.completedItems.filter(i => i !== numericItemIndex);
+      } else {
+        progress.completedItems.push(numericItemIndex);
+      }
+
+      progress.lastUpdated = new Date();
+      // 標記陣列已修改，強制 Mongoose 儲存
+      progress.markModified('completedItems');
+      await progress.save();
+    }
 
     // 同步更新當日打卡紀錄
     const today = new Date().toISOString().split('T')[0]!;
