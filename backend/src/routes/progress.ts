@@ -3,6 +3,7 @@ import Progress from '../models/Progress';
 import PracticeLog from '../models/PracticeLog';
 import { evaluateAndUnlockBadges } from '../services/achievementService';
 import { BADGE_MAP } from '../badges';
+import { generateDailyMenu } from '../services/practiceMenuService';
 
 const router: IRouter = Router();
 
@@ -102,6 +103,26 @@ router.get('/practice-log', async (req: Request, res: Response) => {
     res.json(logs);
   } catch (err) {
     console.error('取得打卡紀錄失敗:', err);
+    res.status(500).json({ error: '伺服器內部錯誤' });
+  }
+});
+
+/**
+ * 取得每日推薦練習清單
+ * GET /api/progress/daily-menu?userId=xxx
+ */
+router.get('/daily-menu', async (req: Request, res: Response) => {
+  try {
+    const { userId } = req.query;
+    if (!userId || typeof userId !== 'string') {
+      res.status(400).json({ error: '缺少 userId 參數' });
+      return;
+    }
+
+    const menu = await generateDailyMenu(userId);
+    res.json(menu);
+  } catch (err) {
+    console.error('取得每日推薦清單失敗:', err);
     res.status(500).json({ error: '伺服器內部錯誤' });
   }
 });

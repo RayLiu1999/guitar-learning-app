@@ -1,6 +1,7 @@
 import { Router, type IRouter, Request, Response } from 'express';
 import fs from 'fs';
 import path from 'path';
+import { buildCatalogAndLinks } from '../services/catalogService';
 
 const router: IRouter = Router();
 
@@ -12,70 +13,13 @@ const CONTENT_DIRS: Record<string, string> = {
   dinner: path.resolve(__dirname, '../content/dinner'),
 };
 
-/** 前綴對照表，用於產生 articleId */
-const CATEGORY_PREFIX: Record<string, string> = {
-  technique: 'tech',
-  theory: 'theory',
-  ghost: 'ghost',
-  dinner: 'dinner',
-};
-
-/** Helper: 遞迴取得目錄下所有 .md 檔案的相對路徑 */
-function getAllMdFiles(dir: string, baseDir: string = dir): string[] {
-  let results: string[] = [];
-  try {
-    const list = fs.readdirSync(dir);
-    list.forEach(file => {
-      const filePath = path.join(dir, file);
-      const stat = fs.statSync(filePath);
-      if (stat && stat.isDirectory()) {
-        // 遞迴進入子資料夾
-        results = results.concat(getAllMdFiles(filePath, baseDir));
-      } else if (file.endsWith('.md')) {
-        // 取得相對於 baseDir 的路徑 (例如: "01_基礎/01_撥弦.md")
-        results.push(path.relative(baseDir, filePath));
-      }
-    });
-  } catch (err) {
-    console.warn(`讀取目錄失敗: ${dir}`, err);
-  }
-
-  return results;
-}
-
 /**
- * 取得所有教材的目錄索引
+ * 取得所有教材的目錄索引與雙向連結
  * GET /api/content/catalog
  */
 router.get('/catalog', (_req: Request, res: Response) => {
   try {
-    const catalog: Record<string, Array<{ id: string; filename: string; title: string }>> = {};
-
-    for (const [category, dir] of Object.entries(CONTENT_DIRS)) {
-      if (!fs.existsSync(dir)) {
-        catalog[category] = [];
-        continue;
-      }
-
-      const files = getAllMdFiles(dir).sort();
-
-      catalog[category] = files.map((relPath) => {
-        // 從檔名提取編號
-        const basename = path.basename(relPath);
-        const match = basename.match(/^(\d+)/);
-        const num = match ? match[1]! : '00';
-        const prefix = CATEGORY_PREFIX[category] || category;
-        const id = `${prefix}_${num}`;  // 穩定格式：tech_01, theory_02 等
-
-        // 從檔名提取標題，移除副檔名與前面的數字
-        const title = basename
-          .replace(/\.md$/, '')
-          .replace(/^\d+_?/, '');
-
-        return { id, filename: encodeURIComponent(relPath), title };
-      });
-    }
-
+    const catalog = buildCatalogAndLinks();
     res.json(catalog);
   } catch (err) {
     console.error('取得目錄失敗:', err);

@@ -4,6 +4,8 @@ export interface ArticleInfo {
   id: string;
   filename: string;
   title: string;
+  forwardLinks?: string[];
+  backlinks?: string[];
 }
 
 export type Catalog = Record<string, ArticleInfo[]>;
@@ -29,6 +31,12 @@ export interface BadgeItem {
   description: string;
   unlocked: boolean;
   unlockedAt: string | null;
+}
+
+export interface DailyMenuItem {
+  articleId: string;
+  reason: 'new' | 'review' | 'continue';
+  title?: string;
 }
 
 export interface ToggleResult {
@@ -94,5 +102,12 @@ export async function fetchPracticeLogs(userId: string): Promise<PracticeLogItem
 export async function fetchAchievements(userId: string): Promise<BadgeItem[]> {
   const res = await fetch(`${API_BASE}/achievements?userId=${userId}`);
   if (!res.ok) throw new Error('無法載入成就徽章');
+  return res.json();
+}
+
+/** 取得使用者每日推薦練習選單 */
+export async function fetchDailyMenu(userId: string): Promise<DailyMenuItem[]> {
+  const res = await fetch(`${API_BASE}/progress/daily-menu?userId=${userId}`);
+  if (!res.ok) throw new Error('無法載入每日推薦');
   return res.json();
 }

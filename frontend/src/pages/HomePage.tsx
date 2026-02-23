@@ -5,6 +5,8 @@ import { HeatmapChart } from '../components/HeatmapChart';
 import { AchievementPanel } from '../components/AchievementPanel';
 import { Metronome } from '../components/Metronome';
 import { SkillTree } from '../components/SkillTree';
+import { DailyPracticeCard } from '../components/DailyPracticeCard';
+import { KnowledgeGraph } from '../components/KnowledgeGraph';
 
 /** 分類元資料 */
 const CATEGORY_META: Record<string, { label: string; emoji: string; description: string; gradient: string }> = {
@@ -130,6 +132,11 @@ export default function HomePage() {
         </p>
       </div>
 
+      {/* 每日推薦菜單 */}
+      <div className="mb-8">
+        <DailyPracticeCard />
+      </div>
+
       {/* 打卡熱力圖 */}
       <div className="mb-8">
         <HeatmapChart logs={practiceLogs} />
@@ -148,6 +155,11 @@ export default function HomePage() {
       {/* 技能樹 */}
       <div className="mb-8">
         <SkillTree progress={progress} />
+      </div>
+
+      {/* 知識圖譜 */}
+      <div className="mb-8">
+        <KnowledgeGraph />
       </div>
 
       {/* 分類卡片 */}

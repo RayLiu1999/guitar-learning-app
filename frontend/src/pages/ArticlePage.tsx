@@ -2,12 +2,16 @@ import { useEffect, useState, useCallback } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import { Fretboard } from '../components/fretboard/Fretboard';
 import {
   fetchArticle,
   fetchProgress,
+  fetchCatalog,
   toggleCheckItem,
   getUserId,
   type ProgressItem,
+  type Catalog,
+  type ArticleInfo,
 } from '../api';
 
 /** 分類名稱轉換 */
@@ -32,6 +36,9 @@ export default function ArticlePage() {
   const [completedItems, setCompletedItems] = useState<number[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  
+  const [catalog, setCatalog] = useState<Catalog>({});
+  const [backlinks, setBacklinks] = useState<ArticleInfo[]>([]);
 
   /** 從檔名提取 articleId */
   const getArticleId = useCallback((): string => {
@@ -60,13 +67,35 @@ export default function ArticlePage() {
         const userId = getUserId();
         const articleId = getArticleId();
 
-        const [articleContent, progressList] = await Promise.all([
+        const [articleContent, progressList, catalogData] = await Promise.all([
           fetchArticle(category, filename),
           fetchProgress(userId),
+          fetchCatalog()
         ]);
 
         setContent(articleContent);
         setCheckItems(extractCheckItems(articleContent));
+        setCatalog(catalogData);
+
+        // 整理 current article 的 backlinks
+        const bl: ArticleInfo[] = [];
+        for (const cat of Object.values(catalogData)) {
+          for (const item of cat) {
+            if (item.id === articleId) {
+              // 找到自己，從 catalog 其他地方找出哪些文章連了自己
+              // 為了簡化，給定 ID，我們去查哪些文章的 ID 存在於 item.backlinks 中
+              const linkSet = new Set(item.backlinks || []);
+              for (const searchCat of Object.values(catalogData)) {
+                for (const searchItem of searchCat) {
+                  if (linkSet.has(searchItem.id)) {
+                    bl.push(searchItem);
+                  }
+                }
+              }
+            }
+          }
+        }
+        setBacklinks(bl);
 
         // 找到此篇的進度
         const articleProgress = progressList.find(
@@ -112,8 +141,31 @@ export default function ArticlePage() {
     );
   }
 
-  // 移除原始 Markdown 中的 checklist，改用互動版本
-  const contentWithoutChecklist = content.replace(/## ✅ 本篇檢查清單[\s\S]*?(?=\n---|\n##|$)/, '');
+  // 將 Markdown 中的 [[article_id]] 或 [[article_id|自訂文字]] 轉為標準 md 連結
+  const resolveWikiLinks = (md: string, catData: Catalog) => {
+    return md.replace(/\[\[(.*?)(?:\|(.*?))?\]\]/g, (match, idStr, aliasStr) => {
+      const id = idStr.trim();
+      let target: { filename: string; category: string; title: string } | null = null;
+      for (const [cat, items] of Object.entries(catData)) {
+        const found = items.find(i => i.id === id);
+        if (found) {
+          target = { filename: found.filename, category: cat, title: found.title };
+          break;
+        }
+      }
+      if (target) {
+        const displayText = aliasStr ? aliasStr.trim() : target.title;
+        return `[${displayText}](/${target.category}/${target.filename})`;
+      }
+      return match; // 找不到對應，保持原樣
+    });
+  };
+
+  // 移除原始 Markdown 中的 checklist，並解析維基標記
+  const contentWithoutChecklist = resolveWikiLinks(
+    content.replace(/## ✅ 本篇檢查清單[\s\S]*?(?=\n---|\n##|$)/, ''),
+    catalog
+  );
 
   return (
     <div className="animate-fade-in">
@@ -131,11 +183,46 @@ export default function ArticlePage() {
       </div>
 
       {/* 文章內容 */}
-      <article className="prose-guitar">
-        <ReactMarkdown remarkPlugins={[remarkGfm]}>
+        <ReactMarkdown 
+          remarkPlugins={[remarkGfm]}
+          components={{
+            code({ className, children, ...props }) {
+              const inline = !className;
+              const match = /language-(\w+)/.exec(className || '');
+              const isFretboard = match && match[1] === 'fretboard';
+              
+              if (!inline && isFretboard) {
+                try {
+                  // 嘗試解析 JSON 內容
+                  const fretboardProps = JSON.parse(String(children).trim());
+                  return (
+                    <div className="not-prose my-6">
+                      <Fretboard {...fretboardProps} />
+                    </div>
+                  );
+                } catch {
+                  return (
+                    <div className="text-red-500 border border-red-500 p-4 rounded">
+                      Fretboard 解析錯誤：區塊內容必須是有效的 JSON (例如: {`{"chord": "Am"}`})
+                    </div>
+                  );
+                }
+              }
+
+              return !inline && match ? (
+                <code className={className} {...props}>
+                  {children}
+                </code>
+              ) : (
+                <code className="bg-surface-700 text-primary-300 px-1.5 py-0.5 rounded text-sm" {...props}>
+                  {children}
+                </code>
+              );
+            }
+          }}
+        >
           {contentWithoutChecklist}
         </ReactMarkdown>
-      </article>
 
       {/* 互動式檢查清單 */}
       {checkItems.length > 0 && (
@@ -194,6 +281,33 @@ export default function ArticlePage() {
               <p className="text-sm text-green-500/70 mt-1">你的進度已自動儲存</p>
             </div>
           )}
+        </div>
+      )}
+
+      {/* 反向連結區塊 */}
+      {backlinks.length > 0 && (
+        <div className="mt-8 pt-6 border-t border-surface-200">
+          <h3 className="text-lg font-bold text-neutral-700 mb-3 flex items-center gap-2">
+            🔗 連結到此篇的文章
+          </h3>
+          <ul className="flex flex-wrap gap-2">
+            {backlinks.map(bl => {
+              const blCategory = bl.id.split('_')[0] === 'tech' ? 'technique' : 
+                                 bl.id.split('_')[0] === 'theory' ? 'theory' : 
+                                 bl.id.split('_')[0];
+              return (
+                <li key={bl.id}>
+                  <Link
+                    to={`/${blCategory}/${bl.filename}`}
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-surface-100 hover:bg-primary-50 text-surface-700 hover:text-primary-600 rounded-lg transition-colors text-sm border border-surface-200 hover:border-primary-200"
+                  >
+                    <span className="opacity-50 text-xs text-mono">{bl.id}</span>
+                    <span>{bl.title}</span>
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
         </div>
       )}
     </div>
