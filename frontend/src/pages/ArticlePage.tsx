@@ -307,11 +307,11 @@ export default function ArticlePage() {
 
       {/* 反向連結區塊 */}
       {backlinks.length > 0 && (
-        <div className="mt-8 pt-6 border-t border-surface-200">
-          <h3 className="text-lg font-bold text-neutral-700 mb-3 flex items-center gap-2">
+        <div className="mt-12 pt-8 border-t border-surface-800">
+          <h3 className="text-lg font-semibold text-gray-400 mb-4 flex items-center gap-2">
             🔗 連結到此篇的文章
           </h3>
-          <ul className="flex flex-wrap gap-2">
+          <ul className="flex flex-wrap gap-3">
             {backlinks.map(bl => {
               const blCategory = bl.id.split('_')[0] === 'tech' ? 'technique' : 
                                  bl.id.split('_')[0] === 'theory' ? 'theory' : 
@@ -320,9 +320,8 @@ export default function ArticlePage() {
                 <li key={bl.id}>
                   <Link
                     to={`/${blCategory}/${bl.filename}`}
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-surface-100 hover:bg-primary-50 text-surface-700 hover:text-primary-600 rounded-lg transition-colors text-sm border border-surface-200 hover:border-primary-200"
+                    className="inline-flex items-center px-4 py-2 bg-surface-800/50 hover:bg-surface-700/80 text-gray-300 hover:text-primary-300 rounded-xl transition-all text-sm border border-surface-700/50 hover:border-primary-500/30 shadow-sm"
                   >
-                    <span className="opacity-50 text-xs text-mono">{bl.id}</span>
                     <span>{bl.title}</span>
                   </Link>
                 </li>
