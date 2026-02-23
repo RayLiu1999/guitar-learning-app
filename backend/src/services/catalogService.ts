@@ -12,10 +12,10 @@ export interface CatalogItem {
 }
 
 const CONTENT_DIRS: Record<string, string> = {
-  technique: path.resolve(__dirname, '../../content/technique'),
-  theory: path.resolve(__dirname, '../../content/theory'),
-  ghost: path.resolve(__dirname, '../../content/ghost'),
-  dinner: path.resolve(__dirname, '../../content/dinner'),
+  technique: path.resolve(__dirname, '../content/technique'),
+  theory: path.resolve(__dirname, '../content/theory'),
+  ghost: path.resolve(__dirname, '../content/ghost'),
+  dinner: path.resolve(__dirname, '../content/dinner'),
 };
 
 const CATEGORY_PREFIX: Record<string, string> = {
@@ -45,15 +45,36 @@ function getAllMdFiles(dir: string, baseDir: string = dir): string[] {
 }
 
 /** 
- * 從 Markdown 文本中提取所有 [[articleId]] 連結 
- * (支援 [[tech_01]] 或是 [[tech_01|自訂名稱]])
+ * 從 Markdown 文本中提取所有 [[articleId]] 或 [text](path.md) 連結
  */
-function extractLinks(content: string): string[] {
+function extractLinks(content: string, pathMap: Map<string, string>, currentDir: string): string[] {
   const links = new Set<string>();
-  const regex = /\[\[(.*?)(?:\|.*?)?\]\]/g;
+
+  // 1. 匹配 WikiLinks: [[articleId]] 
+  const wikiRegex = /\[\[(.*?)(?:\|.*?)?\]\]/g;
   let match;
-  while ((match = regex.exec(content)) !== null) {
-    links.add(match[1]!.trim()); // 加上 ! 防止 TS 報錯
+  while ((match = wikiRegex.exec(content)) !== null) {
+    const id = match[1]!.trim();
+    links.add(id);
+  }
+
+  // 2. 匹配標準 Markdown 連結: [text](path.md)
+  const mdRegex = /\[.*?\]\((.*?\.(?:md|MD))\)/g;
+  while ((match = mdRegex.exec(content)) !== null) {
+    let linkPath = match[1]!;
+    try {
+      if (linkPath.includes('%')) {
+        linkPath = decodeURIComponent(linkPath);
+      }
+    } catch (e) { }
+
+    // 使用 NFC 正規化後進行比對，確保在 macOS 等系統下能正確匹配中文檔名
+    const absolutePath = path.resolve(currentDir, linkPath).normalize('NFC');
+    const targetId = pathMap.get(absolutePath);
+
+    if (targetId) {
+      links.add(targetId);
+    }
   }
   return Array.from(links);
 }
@@ -62,8 +83,24 @@ function extractLinks(content: string): string[] {
 export function buildCatalogAndLinks(): Record<string, CatalogItem[]> {
   const catalog: Record<string, CatalogItem[]> = {};
   const itemMap = new Map<string, CatalogItem>();
+  const pathMap = new Map<string, string>();
 
-  // 1. 初始化目錄與正向連結
+  // 1. 第一輪：建立 Path -> ID 映射
+  for (const [category, dir] of Object.entries(CONTENT_DIRS)) {
+    if (!fs.existsSync(dir)) continue;
+    const files = getAllMdFiles(dir);
+    for (const relPath of files) {
+      const parts = relPath.split(path.sep);
+      const filename = parts[parts.length - 1]!;
+      const match = filename.match(/^(\d+)/);
+      const num = match ? match[1]! : '00';
+      const prefix = CATEGORY_PREFIX[category] || category;
+      const id = `${prefix}_${num}`;
+      pathMap.set(path.resolve(dir, relPath).normalize('NFC'), id);
+    }
+  }
+
+  // 2. 第二輪：正式建立目錄並提取連結
   for (const [category, dir] of Object.entries(CONTENT_DIRS)) {
     catalog[category] = [];
     if (!fs.existsSync(dir)) continue;
@@ -71,19 +108,20 @@ export function buildCatalogAndLinks(): Record<string, CatalogItem[]> {
     const files = getAllMdFiles(dir).sort();
 
     for (const relPath of files) {
-      const basename = path.basename(relPath);
-      const match = basename.match(/^(\d+)/);
+      const parts = relPath.split(path.sep);
+      const filename = parts[parts.length - 1]!;
+      const match = filename.match(/^(\d+)/);
       const num = match ? match[1]! : '00';
       const prefix = CATEGORY_PREFIX[category] || category;
       const id = `${prefix}_${num}`;
 
-      const title = basename.replace(/\.md$/, '').replace(/^\d+_?/, '');
+      const title = filename.replace(/\.md$/, '').replace(/^\d+_?/, '');
       const filePath = path.join(dir, relPath);
       let forwardLinks: string[] = [];
 
       try {
         const content = fs.readFileSync(filePath, 'utf-8');
-        forwardLinks = extractLinks(content);
+        forwardLinks = extractLinks(content, pathMap, path.dirname(filePath));
       } catch (e) {
         console.error(`Read error: ${filePath}`);
       }
@@ -102,7 +140,7 @@ export function buildCatalogAndLinks(): Record<string, CatalogItem[]> {
     }
   }
 
-  // 2. 建立反向連結 (Backlinks)
+  // 3. 第三輪：建立反向連結 (Backlinks)
   for (const item of itemMap.values()) {
     for (const targetId of item.forwardLinks) {
       const targetItem = itemMap.get(targetId);

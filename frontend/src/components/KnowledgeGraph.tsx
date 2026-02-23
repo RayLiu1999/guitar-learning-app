@@ -33,7 +33,6 @@ export function KnowledgeGraph() {
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // 響應式調整圖表大小
     const updateDimensions = () => {
       if (containerRef.current) {
         setDimensions({
@@ -42,14 +41,29 @@ export function KnowledgeGraph() {
         });
       }
     };
-    window.addEventListener('resize', updateDimensions);
-    updateDimensions();
 
-    return () => window.removeEventListener('resize', updateDimensions);
+    // 使用 ResizeObserver 監聽容器實際大小變化 (比 window resize 更精準)
+    const observer = new ResizeObserver(() => {
+      updateDimensions();
+    });
+
+    if (containerRef.current) {
+      observer.observe(containerRef.current);
+    }
+    
+    // 初始偵測 (稍微延遲確保樣式套用)
+    updateDimensions();
+    const timer = setTimeout(updateDimensions, 200);
+
+    return () => {
+      observer.disconnect();
+      clearTimeout(timer);
+    };
   }, []);
 
   useEffect(() => {
     fetchCatalog().then((catData: Catalog) => {
+      console.log('KnowledgeGraph: Loaded Catalog', catData);
       const nodes: GraphNode[] = [];
       const links: GraphLink[] = [];
 
@@ -74,6 +88,7 @@ export function KnowledgeGraph() {
         });
       });
 
+      console.log(`KnowledgeGraph: Generated ${nodes.length} nodes and ${links.length} links`);
       setData({ nodes, links });
       setLoading(false);
       
@@ -97,10 +112,13 @@ export function KnowledgeGraph() {
   return (
     <div className="glass-card p-6 relative flex flex-col h-[500px]" ref={containerRef}>
       <div className="mb-4 flex items-center justify-between z-10">
-        <h2 className="text-xl font-bold font-heading text-neutral-800 flex items-center gap-2">
+        <h2 className="text-xl font-bold font-heading text-neutral-100 flex items-center gap-2">
           <span>🌌</span> 知識圖譜
         </h2>
         <div className="flex gap-3 text-xs font-medium">
+          <span className="text-gray-500">
+            {data.nodes.length} 節點 / {data.links.length} 連線
+          </span>
           {Object.entries(CATEGORY_COLORS).map(([cat, color]) => (
             <div key={cat} className="flex items-center gap-1.5">
               <span className="w-3 h-3 rounded-full" style={{ backgroundColor: color }}></span>
@@ -111,8 +129,9 @@ export function KnowledgeGraph() {
       </div>
 
       <div className="flex-1 bg-surface-50 dark:bg-surface-900/50 rounded-xl overflow-hidden shadow-inner border border-surface-200 dark:border-surface-700">
-        {dimensions.width > 0 && (
+        {dimensions.width > 0 && dimensions.height > 100 && (
           <ForceGraph2D
+            key={`${dimensions.width}-${dimensions.height}`}
             ref={fgRef}
             width={dimensions.width - 48} // 扣除 padding
             height={dimensions.height - 80} // 扣除 padding 與 header
@@ -120,17 +139,18 @@ export function KnowledgeGraph() {
             backgroundColor="transparent"
             nodeLabel="name"
             nodeColor="color"
-            nodeRelSize={4}
-            linkColor={() => 'var(--color-surface-300)'}
-            linkWidth={1}
-            linkDirectionalArrowLength={3.5}
+            nodeRelSize={6} // 稍微加粗一點
+            linkColor={() => '#94a3b8'} // 使用 Explicit color (surface-400)
+            linkWidth={1.5}
+            linkDirectionalArrowLength={4}
             linkDirectionalArrowRelPos={1}
             onNodeClick={(node: GraphNode) => {
               navigate(`/${node.category === 'tech' ? 'technique' : 
                           node.category === 'theory' ? 'theory' : 
                           node.category}/${node.filename}`);
             }}
-            cooldownTicks={100} // 計算很快就停下來，節省效能
+            cooldownTicks={100} 
+            d3AlphaDecay={0.02} // 讓動力學早點穩定
           />
         )}
       </div>

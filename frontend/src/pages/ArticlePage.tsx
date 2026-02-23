@@ -183,6 +183,7 @@ export default function ArticlePage() {
       </div>
 
       {/* 文章內容 */}
+      <article className="prose-guitar">
         <ReactMarkdown 
           remarkPlugins={[remarkGfm]}
           components={{
@@ -211,14 +212,29 @@ export default function ArticlePage() {
                 }
               }
 
-              return !inline && match ? (
-                <div className="w-full overflow-x-auto pb-2 custom-scrollbar my-4 rounded-lg bg-[#282c34]">
-                  <code className={className} {...props} style={{ display: 'block', padding: '1rem', minWidth: 'max-content' }}>
+              const contentStr = String(children);
+              const isMultiline = contentStr.includes('\n');
+              const isBlock = !inline || isMultiline || match;
+
+              return isBlock ? (
+                <div className="w-full overflow-x-auto pb-2 custom-scrollbar my-4 rounded-xl bg-[#1e1e1e] border border-surface-700 shadow-inner">
+                  <code 
+                    className={className} 
+                    {...props} 
+                    style={{ 
+                      display: 'block', 
+                      padding: '1.25rem', 
+                      minWidth: 'max-content',
+                      fontFamily: '"JetBrains Mono", "ui-monospace", monospace',
+                      lineHeight: '1.4',
+                      color: '#d4d4d4'
+                    }}
+                  >
                     {children}
                   </code>
                 </div>
               ) : (
-                <code className="bg-surface-200 dark:bg-surface-700 text-primary-600 dark:text-primary-300 px-1.5 py-0.5 rounded text-sm break-all" {...props}>
+                <code className="bg-surface-800 text-primary-300 px-1.5 py-0.5 rounded text-sm font-mono border border-surface-700" {...props}>
                   {children}
                 </code>
               );
@@ -227,6 +243,7 @@ export default function ArticlePage() {
         >
           {contentWithoutChecklist}
         </ReactMarkdown>
+      </article>
 
       {/* 互動式檢查清單 */}
       {checkItems.length > 0 && (

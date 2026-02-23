@@ -6,7 +6,7 @@ import { AchievementPanel } from '../components/AchievementPanel';
 import { Metronome } from '../components/Metronome';
 import { SkillTree } from '../components/SkillTree';
 import { DailyPracticeCard } from '../components/DailyPracticeCard';
-import { KnowledgeGraph } from '../components/KnowledgeGraph';
+// import { KnowledgeGraph } from '../components/KnowledgeGraph';
 
 /** 分類元資料 */
 const CATEGORY_META: Record<string, { label: string; emoji: string; description: string; gradient: string }> = {
@@ -157,10 +157,11 @@ export default function HomePage() {
         <SkillTree progress={progress} />
       </div>
 
-      {/* 知識圖譜 */}
+      {/* 知識圖譜 (暫時隱藏)
       <div className="mb-8">
         <KnowledgeGraph />
       </div>
+      */}
 
       {/* 分類卡片 */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
