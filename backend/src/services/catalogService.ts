@@ -12,11 +12,19 @@ export interface CatalogItem {
 }
 
 const CONTENT_DIRS: Record<string, string> = {
-  technique: path.resolve(__dirname, '../content/technique'),
-  theory: path.resolve(__dirname, '../content/theory'),
-  ghost: path.resolve(__dirname, '../content/ghost'),
-  dinner: path.resolve(__dirname, '../content/dinner'),
+  technique: path.resolve(__dirname, '../../src/content/technique'),
+  theory: path.resolve(__dirname, '../../src/content/theory'),
+  ghost: path.resolve(__dirname, '../../src/content/ghost'),
+  dinner: path.resolve(__dirname, '../../src/content/dinner'),
 };
+
+// 增加對編譯後路徑的支援
+if (!fs.existsSync(CONTENT_DIRS.technique)) {
+  CONTENT_DIRS.technique = path.resolve(__dirname, '../content/technique');
+  CONTENT_DIRS.theory = path.resolve(__dirname, '../content/theory');
+  CONTENT_DIRS.ghost = path.resolve(__dirname, '../content/ghost');
+  CONTENT_DIRS.dinner = path.resolve(__dirname, '../content/dinner');
+}
 
 const CATEGORY_PREFIX: Record<string, string> = {
   technique: 'tech',
