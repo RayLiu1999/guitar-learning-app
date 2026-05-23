@@ -1,0 +1,874 @@
+{
+  "technique": [
+    {
+      "id": "tech_00",
+      "filename": "00_%E6%8A%80%E5%B7%A7%E7%B8%BD%E8%A6%BD%E8%88%87%E6%8A%80%E8%83%BD%E6%A8%B9.md",
+      "title": "技巧總覽與技能樹",
+      "category": "technique",
+      "forwardLinks": [
+        "tech_01",
+        "tech_02",
+        "tech_03",
+        "tech_04",
+        "tech_05",
+        "tech_06",
+        "tech_07",
+        "tech_08",
+        "tech_09",
+        "tech_10",
+        "tech_11",
+        "tech_12",
+        "tech_13",
+        "tech_14",
+        "tech_15",
+        "tech_16",
+        "tech_17",
+        "tech_18"
+      ],
+      "backlinks": [
+        "tech_18"
+      ]
+    },
+    {
+      "id": "tech_01",
+      "filename": "01_%E6%92%A5%E5%BC%A6%E5%9F%BA%E7%A4%8E.md",
+      "title": "撥弦基礎",
+      "category": "technique",
+      "forwardLinks": [
+        "tech_02"
+      ],
+      "backlinks": [
+        "tech_00",
+        "tech_03",
+        "tech_04",
+        "tech_10",
+        "tech_11",
+        "tech_13",
+        "tech_14"
+      ]
+    },
+    {
+      "id": "tech_02",
+      "filename": "02_%E5%B7%A6%E6%89%8B%E5%9F%BA%E7%A4%8E%E8%88%87%E7%88%AC%E6%A0%BC%E5%AD%90.md",
+      "title": "左手基礎與爬格子",
+      "category": "technique",
+      "forwardLinks": [
+        "tech_03"
+      ],
+      "backlinks": [
+        "tech_00",
+        "tech_01",
+        "tech_03",
+        "tech_06",
+        "tech_07",
+        "tech_08",
+        "tech_09"
+      ]
+    },
+    {
+      "id": "tech_03",
+      "filename": "03_Power_Chord.md",
+      "title": "Power_Chord",
+      "category": "technique",
+      "forwardLinks": [
+        "tech_01",
+        "tech_02",
+        "tech_04"
+      ],
+      "backlinks": [
+        "tech_00",
+        "tech_02",
+        "tech_04",
+        "tech_05"
+      ]
+    },
+    {
+      "id": "tech_04",
+      "filename": "04_Palm_Mute.md",
+      "title": "Palm_Mute",
+      "category": "technique",
+      "forwardLinks": [
+        "tech_01",
+        "tech_03",
+        "tech_05"
+      ],
+      "backlinks": [
+        "tech_00",
+        "tech_03",
+        "tech_10"
+      ]
+    },
+    {
+      "id": "tech_05",
+      "filename": "05_%E5%9F%BA%E7%A4%8E%E5%92%8C%E5%BC%A6.md",
+      "title": "基礎和弦",
+      "category": "technique",
+      "forwardLinks": [
+        "tech_03",
+        "tech_06"
+      ],
+      "backlinks": [
+        "tech_00",
+        "tech_04",
+        "tech_09"
+      ]
+    },
+    {
+      "id": "tech_06",
+      "filename": "06_%E6%90%A5%E5%BC%A6%E8%88%87%E5%8B%BE%E5%BC%A6.md",
+      "title": "搥弦與勾弦",
+      "category": "technique",
+      "forwardLinks": [
+        "tech_02",
+        "tech_07"
+      ],
+      "backlinks": [
+        "tech_00",
+        "tech_05",
+        "tech_07",
+        "tech_12"
+      ]
+    },
+    {
+      "id": "tech_07",
+      "filename": "07_%E6%8E%A8%E5%BC%A6%E8%88%87%E6%8F%89%E5%BC%A6.md",
+      "title": "推弦與揉弦",
+      "category": "technique",
+      "forwardLinks": [
+        "tech_02",
+        "tech_06",
+        "tech_08"
+      ],
+      "backlinks": [
+        "tech_00",
+        "tech_06",
+        "tech_15",
+        "tech_18"
+      ]
+    },
+    {
+      "id": "tech_08",
+      "filename": "08_%E6%BB%91%E9%9F%B3.md",
+      "title": "滑音",
+      "category": "technique",
+      "forwardLinks": [
+        "tech_02",
+        "tech_09"
+      ],
+      "backlinks": [
+        "tech_00",
+        "tech_07"
+      ]
+    },
+    {
+      "id": "tech_09",
+      "filename": "09_%E9%9F%B3%E9%9A%8E%E7%B3%BB%E7%B5%B1.md",
+      "title": "音階系統",
+      "category": "technique",
+      "forwardLinks": [
+        "tech_02",
+        "tech_05",
+        "tech_10"
+      ],
+      "backlinks": [
+        "tech_00",
+        "tech_08",
+        "tech_11",
+        "tech_13",
+        "tech_18"
+      ]
+    },
+    {
+      "id": "tech_10",
+      "filename": "10_%E7%AF%80%E5%A5%8F%E9%80%B2%E9%9A%8E.md",
+      "title": "節奏進階",
+      "category": "technique",
+      "forwardLinks": [
+        "tech_01",
+        "tech_04",
+        "tech_11"
+      ],
+      "backlinks": [
+        "tech_00",
+        "tech_09",
+        "tech_18"
+      ]
+    },
+    {
+      "id": "tech_11",
+      "filename": "11_%E9%80%9F%E5%BD%88%E5%85%A5%E9%96%80.md",
+      "title": "速彈入門",
+      "category": "technique",
+      "forwardLinks": [
+        "tech_01",
+        "tech_09",
+        "tech_12"
+      ],
+      "backlinks": [
+        "tech_00",
+        "tech_10"
+      ]
+    },
+    {
+      "id": "tech_12",
+      "filename": "12_Tapping.md",
+      "title": "Tapping",
+      "category": "technique",
+      "forwardLinks": [
+        "tech_06",
+        "tech_13"
+      ],
+      "backlinks": [
+        "tech_00",
+        "tech_11"
+      ]
+    },
+    {
+      "id": "tech_13",
+      "filename": "13_Sweep_Picking.md",
+      "title": "Sweep_Picking",
+      "category": "technique",
+      "forwardLinks": [
+        "tech_01",
+        "tech_09",
+        "tech_14"
+      ],
+      "backlinks": [
+        "tech_00",
+        "tech_12"
+      ]
+    },
+    {
+      "id": "tech_14",
+      "filename": "14_%E6%B3%9B%E9%9F%B3%E6%8A%80%E5%B7%A7.md",
+      "title": "泛音技巧",
+      "category": "technique",
+      "forwardLinks": [
+        "tech_01",
+        "tech_15"
+      ],
+      "backlinks": [
+        "tech_00",
+        "tech_13"
+      ]
+    },
+    {
+      "id": "tech_15",
+      "filename": "15_%E6%90%96%E6%A1%BF%E6%8A%80%E5%B7%A7.md",
+      "title": "搖桿技巧",
+      "category": "technique",
+      "forwardLinks": [
+        "tech_07",
+        "tech_16"
+      ],
+      "backlinks": [
+        "tech_00",
+        "tech_14"
+      ]
+    },
+    {
+      "id": "tech_16",
+      "filename": "16_%E9%9F%B3%E8%89%B2%E6%8E%A7%E5%88%B6.md",
+      "title": "音色控制",
+      "category": "technique",
+      "forwardLinks": [
+        "tech_17"
+      ],
+      "backlinks": [
+        "tech_00",
+        "tech_15"
+      ]
+    },
+    {
+      "id": "tech_17",
+      "filename": "17_%E6%95%88%E6%9E%9C%E5%99%A8%E5%85%A5%E9%96%80.md",
+      "title": "效果器入門",
+      "category": "technique",
+      "forwardLinks": [
+        "tech_18"
+      ],
+      "backlinks": [
+        "tech_00",
+        "tech_16"
+      ]
+    },
+    {
+      "id": "tech_18",
+      "filename": "18_%E5%8D%B3%E8%88%88%E5%85%A5%E9%96%80.md",
+      "title": "即興入門",
+      "category": "technique",
+      "forwardLinks": [
+        "tech_07",
+        "tech_09",
+        "tech_10",
+        "tech_00"
+      ],
+      "backlinks": [
+        "tech_00",
+        "tech_17"
+      ]
+    }
+  ],
+  "theory": [
+    {
+      "id": "theory_00",
+      "filename": "00_%E6%A8%82%E7%90%86%E7%B8%BD%E8%A6%BD%E8%88%87%E7%9F%A5%E8%AD%98%E6%A8%B9.md",
+      "title": "樂理總覽與知識樹",
+      "category": "theory",
+      "forwardLinks": [
+        "theory_01",
+        "theory_02",
+        "theory_03",
+        "theory_04",
+        "theory_05",
+        "theory_06",
+        "theory_07",
+        "theory_08",
+        "theory_09",
+        "theory_10",
+        "theory_11",
+        "theory_12",
+        "theory_13",
+        "theory_14",
+        "theory_15",
+        "theory_16",
+        "theory_17",
+        "theory_18"
+      ],
+      "backlinks": [
+        "theory_18"
+      ]
+    },
+    {
+      "id": "theory_01",
+      "filename": "01_%E9%9F%B3%E5%90%8D%E8%88%87%E6%8C%87%E6%9D%BF%E5%9C%B0%E5%9C%96.md",
+      "title": "音名與指板地圖",
+      "category": "theory",
+      "forwardLinks": [
+        "theory_02"
+      ],
+      "backlinks": [
+        "theory_00",
+        "theory_02",
+        "theory_03"
+      ]
+    },
+    {
+      "id": "theory_02",
+      "filename": "02_%E9%9F%B3%E7%A8%8B.md",
+      "title": "音程",
+      "category": "theory",
+      "forwardLinks": [
+        "theory_01",
+        "theory_03"
+      ],
+      "backlinks": [
+        "theory_00",
+        "theory_01",
+        "theory_03",
+        "theory_06"
+      ]
+    },
+    {
+      "id": "theory_03",
+      "filename": "03_%E5%A4%A7%E8%AA%BF%E9%9F%B3%E9%9A%8E%E8%88%87%E8%AA%BF%E6%80%A7.md",
+      "title": "大調音階與調性",
+      "category": "theory",
+      "forwardLinks": [
+        "theory_01",
+        "theory_02",
+        "theory_04"
+      ],
+      "backlinks": [
+        "theory_00",
+        "theory_02",
+        "theory_04",
+        "theory_05",
+        "theory_06",
+        "theory_11",
+        "theory_12"
+      ]
+    },
+    {
+      "id": "theory_04",
+      "filename": "04_%E5%B0%8F%E8%AA%BF%E9%9F%B3%E9%9A%8E.md",
+      "title": "小調音階",
+      "category": "theory",
+      "forwardLinks": [
+        "theory_03",
+        "theory_05"
+      ],
+      "backlinks": [
+        "theory_00",
+        "theory_03",
+        "theory_05",
+        "theory_11"
+      ]
+    },
+    {
+      "id": "theory_05",
+      "filename": "05_%E4%BA%94%E8%81%B2%E9%9F%B3%E9%9A%8E%E6%B7%B1%E5%85%A5%E8%A7%A3%E6%9E%90.md",
+      "title": "五聲音階深入解析",
+      "category": "theory",
+      "forwardLinks": [
+        "theory_03",
+        "theory_04",
+        "theory_06"
+      ],
+      "backlinks": [
+        "theory_00",
+        "theory_04",
+        "theory_09",
+        "theory_14"
+      ]
+    },
+    {
+      "id": "theory_06",
+      "filename": "06_%E5%92%8C%E5%BC%A6%E6%A7%8B%E6%88%90%E5%8E%9F%E7%90%86.md",
+      "title": "和弦構成原理",
+      "category": "theory",
+      "forwardLinks": [
+        "theory_02",
+        "theory_03",
+        "theory_07"
+      ],
+      "backlinks": [
+        "theory_00",
+        "theory_05",
+        "theory_07",
+        "theory_08",
+        "theory_09",
+        "theory_10"
+      ]
+    },
+    {
+      "id": "theory_07",
+      "filename": "07_%E4%B8%83%E5%92%8C%E5%BC%A6%E8%88%87%E5%BB%B6%E4%BC%B8%E5%92%8C%E5%BC%A6.md",
+      "title": "七和弦與延伸和弦",
+      "category": "theory",
+      "forwardLinks": [
+        "theory_06",
+        "theory_08"
+      ],
+      "backlinks": [
+        "theory_00",
+        "theory_06"
+      ]
+    },
+    {
+      "id": "theory_08",
+      "filename": "08_%E5%92%8C%E5%BC%A6%E9%80%B2%E8%A1%8C.md",
+      "title": "和弦進行",
+      "category": "theory",
+      "forwardLinks": [
+        "theory_06",
+        "theory_09"
+      ],
+      "backlinks": [
+        "theory_00",
+        "theory_07",
+        "theory_12",
+        "theory_13",
+        "theory_14",
+        "theory_16",
+        "theory_18"
+      ]
+    },
+    {
+      "id": "theory_09",
+      "filename": "09_CAGED_%E7%B3%BB%E7%B5%B1.md",
+      "title": "CAGED_系統",
+      "category": "theory",
+      "forwardLinks": [
+        "theory_05",
+        "theory_06",
+        "theory_10"
+      ],
+      "backlinks": [
+        "theory_00",
+        "theory_08"
+      ]
+    },
+    {
+      "id": "theory_10",
+      "filename": "10_%E4%B8%89%E5%92%8C%E5%BC%A6%E8%BD%89%E4%BD%8D%E8%88%87%E6%8C%87%E6%9D%BF%E6%87%89%E7%94%A8.md",
+      "title": "三和弦轉位與指板應用",
+      "category": "theory",
+      "forwardLinks": [
+        "theory_06",
+        "theory_11"
+      ],
+      "backlinks": [
+        "theory_00",
+        "theory_09"
+      ]
+    },
+    {
+      "id": "theory_11",
+      "filename": "11_%E8%AA%BF%E5%BC%8F.md",
+      "title": "調式",
+      "category": "theory",
+      "forwardLinks": [
+        "theory_03",
+        "theory_04",
+        "theory_12"
+      ],
+      "backlinks": [
+        "theory_00",
+        "theory_10"
+      ]
+    },
+    {
+      "id": "theory_12",
+      "filename": "12_%E4%BA%94%E5%BA%A6%E5%9C%88.md",
+      "title": "五度圈",
+      "category": "theory",
+      "forwardLinks": [
+        "theory_03",
+        "theory_08",
+        "theory_13"
+      ],
+      "backlinks": [
+        "theory_00",
+        "theory_11",
+        "theory_13",
+        "theory_17"
+      ]
+    },
+    {
+      "id": "theory_13",
+      "filename": "13_%E5%92%8C%E8%81%B2%E5%88%86%E6%9E%90.md",
+      "title": "和聲分析",
+      "category": "theory",
+      "forwardLinks": [
+        "theory_08",
+        "theory_12",
+        "theory_14"
+      ],
+      "backlinks": [
+        "theory_00",
+        "theory_12",
+        "theory_16",
+        "theory_17"
+      ]
+    },
+    {
+      "id": "theory_14",
+      "filename": "14_%E5%8D%B3%E8%88%88%E7%9A%84%E7%90%86%E8%AB%96%E5%9F%BA%E7%A4%8E.md",
+      "title": "即興的理論基礎",
+      "category": "theory",
+      "forwardLinks": [
+        "theory_05",
+        "theory_08",
+        "theory_15"
+      ],
+      "backlinks": [
+        "theory_00",
+        "theory_13",
+        "theory_18"
+      ]
+    },
+    {
+      "id": "theory_15",
+      "filename": "15_%E7%AF%80%E5%A5%8F%E7%90%86%E8%AB%96.md",
+      "title": "節奏理論",
+      "category": "theory",
+      "forwardLinks": [
+        "theory_16"
+      ],
+      "backlinks": [
+        "theory_00",
+        "theory_14"
+      ]
+    },
+    {
+      "id": "theory_16",
+      "filename": "16_%E6%AD%8C%E6%9B%B2%E5%88%86%E6%9E%90%E5%AF%A6%E6%88%B0.md",
+      "title": "歌曲分析實戰",
+      "category": "theory",
+      "forwardLinks": [
+        "theory_08",
+        "theory_13",
+        "theory_17"
+      ],
+      "backlinks": [
+        "theory_00",
+        "theory_15",
+        "theory_18"
+      ]
+    },
+    {
+      "id": "theory_17",
+      "filename": "17_%E8%BD%89%E8%AA%BF%E8%88%87%E5%80%9F%E7%94%A8%E5%92%8C%E5%BC%A6.md",
+      "title": "轉調與借用和弦",
+      "category": "theory",
+      "forwardLinks": [
+        "theory_12",
+        "theory_13",
+        "theory_18"
+      ],
+      "backlinks": [
+        "theory_00",
+        "theory_16"
+      ]
+    },
+    {
+      "id": "theory_18",
+      "filename": "18_%E4%BD%9C%E6%9B%B2%E5%85%A5%E9%96%80.md",
+      "title": "作曲入門",
+      "category": "theory",
+      "forwardLinks": [
+        "theory_08",
+        "theory_14",
+        "theory_16",
+        "theory_00"
+      ],
+      "backlinks": [
+        "theory_00",
+        "theory_17"
+      ]
+    }
+  ],
+  "ghost": [
+    {
+      "id": "ghost_00",
+      "filename": "00_%E7%B3%BB%E5%88%97%E5%B0%8E%E8%A6%BD.md",
+      "title": "系列導覽",
+      "category": "ghost",
+      "forwardLinks": [
+        "ghost_01",
+        "ghost_02",
+        "ghost_03",
+        "ghost_04",
+        "ghost_05",
+        "ghost_06",
+        "ghost_07",
+        "ghost_08"
+      ],
+      "backlinks": [
+        "ghost_08"
+      ]
+    },
+    {
+      "id": "ghost_01",
+      "filename": "01_%E8%AA%8D%E8%AD%98%E9%80%99%E9%A6%96%E6%AD%8C.md",
+      "title": "認識這首歌",
+      "category": "ghost",
+      "forwardLinks": [
+        "ghost_04",
+        "ghost_02"
+      ],
+      "backlinks": [
+        "ghost_00"
+      ]
+    },
+    {
+      "id": "ghost_02",
+      "filename": "02_%E5%9F%BA%E7%A4%8E%E6%BA%96%E5%82%99%E7%AF%87.md",
+      "title": "基礎準備篇",
+      "category": "ghost",
+      "forwardLinks": [
+        "ghost_03"
+      ],
+      "backlinks": [
+        "ghost_00",
+        "ghost_01"
+      ]
+    },
+    {
+      "id": "ghost_03",
+      "filename": "03_%E9%9F%B3%E8%89%B2%E8%88%87%E6%95%88%E6%9E%9C%E5%99%A8%E7%AF%87.md",
+      "title": "音色與效果器篇",
+      "category": "ghost",
+      "forwardLinks": [
+        "ghost_04"
+      ],
+      "backlinks": [
+        "ghost_00",
+        "ghost_02"
+      ]
+    },
+    {
+      "id": "ghost_04",
+      "filename": "04_Riff%E8%88%87%E5%92%8C%E5%BC%A6%E7%AF%87.md",
+      "title": "Riff與和弦篇",
+      "category": "ghost",
+      "forwardLinks": [
+        "ghost_06",
+        "ghost_05"
+      ],
+      "backlinks": [
+        "ghost_00",
+        "ghost_01",
+        "ghost_03"
+      ]
+    },
+    {
+      "id": "ghost_05",
+      "filename": "05_%E5%8F%B3%E6%89%8B%E6%8A%80%E5%B7%A7%E7%AF%87.md",
+      "title": "右手技巧篇",
+      "category": "ghost",
+      "forwardLinks": [
+        "ghost_06"
+      ],
+      "backlinks": [
+        "ghost_00",
+        "ghost_04"
+      ]
+    },
+    {
+      "id": "ghost_06",
+      "filename": "06_%E5%88%86%E6%AE%B5%E6%95%99%E5%AD%B8%E7%AF%87.md",
+      "title": "分段教學篇",
+      "category": "ghost",
+      "forwardLinks": [
+        "ghost_07"
+      ],
+      "backlinks": [
+        "ghost_00",
+        "ghost_04",
+        "ghost_05"
+      ]
+    },
+    {
+      "id": "ghost_07",
+      "filename": "07_%E5%AE%8C%E6%95%B4TAB%E8%AD%9C.md",
+      "title": "完整TAB譜",
+      "category": "ghost",
+      "forwardLinks": [
+        "ghost_08"
+      ],
+      "backlinks": [
+        "ghost_00",
+        "ghost_06"
+      ]
+    },
+    {
+      "id": "ghost_08",
+      "filename": "08_%E7%B7%B4%E7%BF%92%E8%A8%88%E7%95%AB%E7%AF%87.md",
+      "title": "練習計畫篇",
+      "category": "ghost",
+      "forwardLinks": [
+        "ghost_00"
+      ],
+      "backlinks": [
+        "ghost_00",
+        "ghost_07"
+      ]
+    }
+  ],
+  "dinner": [
+    {
+      "id": "dinner_00",
+      "filename": "00_%E7%B3%BB%E5%88%97%E5%B0%8E%E8%A6%BD.md",
+      "title": "系列導覽",
+      "category": "dinner",
+      "forwardLinks": [
+        "dinner_01",
+        "dinner_02",
+        "dinner_03",
+        "dinner_04",
+        "dinner_05",
+        "dinner_06",
+        "dinner_07"
+      ],
+      "backlinks": []
+    },
+    {
+      "id": "dinner_01",
+      "filename": "01_%E8%AA%8D%E8%AD%98%E9%80%99%E9%A6%96%E6%AD%8C.md",
+      "title": "認識這首歌",
+      "category": "dinner",
+      "forwardLinks": [
+        "dinner_02"
+      ],
+      "backlinks": []
+    },
+    {
+      "id": "dinner_02",
+      "filename": "02_%E5%9F%BA%E7%A4%8E%E6%BA%96%E5%82%99%E7%AF%87.md",
+      "title": "基礎準備篇",
+      "category": "dinner",
+      "forwardLinks": [
+        "dinner_03"
+      ],
+      "backlinks": [
+        "dinner_01"
+      ]
+    },
+    {
+      "id": "dinner_03",
+      "filename": "03_%E5%92%8C%E5%BC%A6%E5%85%A8%E6%94%BB%E7%95%A5.md",
+      "title": "和弦全攻略",
+      "category": "dinner",
+      "forwardLinks": [
+        "dinner_04"
+      ],
+      "backlinks": [
+        "dinner_02",
+        "dinner_07"
+      ]
+    },
+    {
+      "id": "dinner_04",
+      "filename": "04_%E5%8F%B3%E6%89%8B%E6%8A%80%E5%B7%A7%E7%AF%87.md",
+      "title": "右手技巧篇",
+      "category": "dinner",
+      "forwardLinks": [
+        "dinner_05"
+      ],
+      "backlinks": [
+        "dinner_03"
+      ]
+    },
+    {
+      "id": "dinner_05",
+      "filename": "05_%E5%88%86%E6%AE%B5%E6%95%99%E5%AD%B8%E7%AF%87.md",
+      "title": "分段教學篇",
+      "category": "dinner",
+      "forwardLinks": [
+        "dinner_06"
+      ],
+      "backlinks": [
+        "dinner_04",
+        "dinner_07"
+      ]
+    },
+    {
+      "id": "dinner_06",
+      "filename": "06_%E5%AE%8C%E6%95%B4%E5%92%8C%E5%BC%A6%E8%AD%9C.md",
+      "title": "完整和弦譜",
+      "category": "dinner",
+      "forwardLinks": [
+        "dinner_07"
+      ],
+      "backlinks": [
+        "dinner_05"
+      ]
+    },
+    {
+      "id": "dinner_07",
+      "filename": "07_%E7%B7%B4%E7%BF%92%E8%A8%88%E7%95%AB%E7%AF%87.md",
+      "title": "練習計畫篇",
+      "category": "dinner",
+      "forwardLinks": [
+        "dinner_03",
+        "dinner_05",
+        "dinner_00"
+      ],
+      "backlinks": [
+        "dinner_06"
+      ]
+    },
+    {
+      "id": "dinner_00",
+      "filename": "%E6%99%9A%E9%A4%90%E6%AD%8C_%E5%90%89%E4%BB%96%E6%95%99%E5%AD%B8%E6%89%8B%E5%86%8A.md",
+      "title": "晚餐歌_吉他教學手冊",
+      "category": "dinner",
+      "forwardLinks": [],
+      "backlinks": [
+        "dinner_07"
+      ]
+    }
+  ]
+}

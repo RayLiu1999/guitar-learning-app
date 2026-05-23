@@ -5,16 +5,4 @@ services:
       dockerfile: Dockerfile
     ports:
       - "${HOST_IP:-127.0.0.1}:${FRONTEND_PORT:-3000}:80"
-    depends_on:
-      - backend
-    restart: unless-stopped
-
-  backend:
-    build:
-      context: ./backend
-      dockerfile: Dockerfile
-    environment:
-      - MONGODB_URI=${MONGODB_URI:-mongodb://host.docker.internal:27017/guitar-learning}
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
     restart: unless-stopped
